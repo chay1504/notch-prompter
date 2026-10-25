@@ -2,7 +2,9 @@
 
 A static landing page (no build step) for NotchPrompter on Windows and Mac.
 
-The Mac button downloads the universal app ZIP from the versioned GitHub prerelease. When publishing a new Mac release, update both `data-mac-download` links and the release-notes link in `index.html`. Mac capture exclusion is not guaranteed; keep the recording disclosure visible. The current explainer video demonstrates Windows behavior.
+The Mac beta link downloads the universal app ZIP from the versioned GitHub prerelease. Update that link and the release-notes link in `index.html` when publishing a new Mac release. Keep the unnotarized-app and recording disclosures visible. The current video demonstrates Windows behavior.
+
+The primary Chrome extension ZIP is served from `downloads/`. From the repository root, run `python tools/package-extension.py` after changing the extension; this also updates its checksum and size metadata. Update the version shown in the website and ZIP URL query when releasing a new extension version. Developer-mode installation instructions live in the `#extension` section; native Mac installation options live in `#mac-install`.
 
 ```
 index.html      the page
