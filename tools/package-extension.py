@@ -18,6 +18,7 @@ archive = output / 'NotchPrompter-Chrome.zip'
 with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_STORED) as package:
     for name in sorted(files):
         entry = zipfile.ZipInfo('NotchPrompter-Chrome/' + name, date_time=(2026, 10, 25, 0, 0, 0))
+        entry.create_system = 3  # Identical ZIP metadata on Windows, macOS and Linux.
         entry.compress_type = zipfile.ZIP_STORED
         entry.external_attr = 0o100644 << 16
         data = (source / name).read_bytes()
