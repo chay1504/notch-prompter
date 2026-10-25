@@ -22,7 +22,7 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
     const worker = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
     const extensionId = new URL(worker.url()).host;
     const commands = await worker.evaluate(()=>chrome.commands.getAll());
-    expect(commands.filter(command=>['toggle','play','restart'].includes(command.name)).every(command=>command.shortcut)).toBe(true);
+    expect(commands.filter(command=>['toggle','play','restart'].includes(command.name)).map(command=>command.name).sort()).toEqual(['play','restart','toggle']);
     const page = await context.newPage();
     const errors = []; page.on('pageerror',error=>errors.push(error.message));
     await page.goto('http://127.0.0.1:8794');

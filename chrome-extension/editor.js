@@ -78,4 +78,9 @@
     $("file").value = "";
   });
   labels();
+  const unassigned = (await chrome.commands.getAll()).filter(command => command.name !== "_execute_action" && !command.shortcut);
+  if (unassigned.length) {
+    $("shortcuts-notice").hidden = false;
+    $("shortcuts-notice").textContent = "Some shortcuts are unavailable. Assign them at chrome://extensions/shortcuts. The on-screen controls still work.";
+  }
 })();
