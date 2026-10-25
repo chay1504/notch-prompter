@@ -24,6 +24,18 @@
     $("wpm-value").textContent = $("wpm").value + " wpm";
     $("font-value").textContent = $("font").value + " px";
   }
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== "local") return;
+    const controls = {script:"script", wpm:"wpm", fontSize:"font", countdown:"countdown", center:"center"};
+    for (const [key, id] of Object.entries(controls)) {
+      const input = $(id);
+      if (!(key in changes) || document.activeElement === input) continue;
+      const value = changes[key].newValue ?? Core.defaults[key];
+      if (input.type === "checkbox") input.checked = value;
+      else input.value = value;
+    }
+    labels();
+  });
   function save() {
     clearTimeout(saveTimer);
     // Only write fields this editor owns: preserve the overlay's saved width and height.

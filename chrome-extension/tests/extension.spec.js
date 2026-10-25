@@ -47,6 +47,7 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
     await expect(host.locator('.island')).toHaveAttribute('data-playing','false');
     await host.getByRole('button',{name:'Faster',exact:true}).click();
     await expect.poll(()=>worker.evaluate(async()=> (await chrome.storage.local.get('wpm')).wpm)).toBe(150);
+    await expect(editor.locator('#wpm')).toHaveValue('150');
     await host.getByRole('button',{name:'Resize teleprompter. Use arrow keys; Shift plus arrows changes width.',exact:true}).press('ArrowDown');
     await expect.poll(()=>worker.evaluate(async()=> (await chrome.storage.local.get('height')).height)).toBe(240);
     await host.getByRole('button',{name:'Back to top',exact:true}).click();
@@ -69,8 +70,15 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
     await editor.reload();
     await expect(editor.getByLabel('Your script',{exact:true})).toHaveValue(script);
     await expect(editor.locator('#wpm')).toHaveValue('150');
+    const strict = await context.newPage();
+    await strict.goto('http://127.0.0.1:8794/strict');
+    const strictId = await worker.evaluate(async()=> (await chrome.tabs.query({})).find(tab=>tab.url==='http://127.0.0.1:8794/strict').id);
+    await worker.evaluate(id=>control(id,'show'),strictId);
+    await expect(strict.locator('notch-prompter-overlay .island')).toHaveCSS('background-color','rgb(0, 0, 0)');
+    await expect(strict.locator('notch-prompter-overlay .script')).toContainText('Hello world.');
     const blocked = await context.newPage();
     await blocked.goto('chrome://version');
+    await blocked.bringToFront();
     const blockedId = await worker.evaluate(async()=> (await chrome.tabs.query({})).find(tab=>tab.active).id);
     const failure = await worker.evaluate(async id=> {try{await control(id,'show');return '';}catch(error){return error.message;}},blockedId);
     expect(failure).toContain('normal website');
