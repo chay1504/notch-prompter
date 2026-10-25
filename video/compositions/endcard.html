@@ -1,0 +1,51 @@
+<template>
+  <style>
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI"); font-weight: 400; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Semibold"); font-weight: 600; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Bold"); font-weight: 700; }
+    @font-face { font-family: "NP Icons"; src: local("Segoe Fluent Icons"), local("Segoe MDL2 Assets"); }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "NP Segoe", sans-serif; color: #111111; }
+    .np-ground { position: absolute; inset: 0; background: radial-gradient(1100px 760px at 50% 0%, #F5F3EF 0%, #E9E6E1 72%); }
+
+    #e-icon { position: absolute; left: 860px; top: 196px; width: 200px; height: 200px; border-radius: 46px;
+      background: linear-gradient(180deg, #3A3E4E 0%, #14151C 100%); box-shadow: 0 24px 50px rgba(0, 0, 0, 0.22); overflow: hidden; opacity: 0; }
+    .e-notch { position: absolute; left: 50px; top: 0; width: 100px; height: 38px; background: #000; border-radius: 0 0 19px 19px; }
+    .e-dot { position: absolute; left: 72px; top: 15px; width: 10px; height: 10px; border-radius: 50%; background: #30D158; }
+    .e-bar { position: absolute; height: 15px; border-radius: 8px; }
+    #e-name { position: absolute; left: 0; top: 428px; width: 1920px; text-align: center; font-size: 108px; font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.1; }
+    #e-name span, #e-tag span { display: inline-block; opacity: 0; }
+    #e-tag { position: absolute; left: 0; top: 576px; width: 1920px; text-align: center; font-size: 38px; font-weight: 600; color: #55555B; }
+    #e-btn { position: absolute; left: 680px; top: 690px; width: 560px; height: 96px; border-radius: 18px; background: #111111;
+      color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 38px; font-weight: 600; opacity: 0; }
+    #e-btn .np-icon { font-family: "NP Icons"; font-size: 32px; }
+  </style>
+
+  <div data-hf-id="hf-32ii" id="root" data-composition-id="endcard" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-8oe6" class="np-ground"></div>
+    <div data-hf-id="hf-kr24" id="e-icon">
+      <div data-hf-id="hf-h7d4" class="e-notch"><div data-hf-id="hf-cfcv" class="e-dot"></div></div>
+      <div data-hf-id="hf-dd14" class="e-bar" style="left: 40px; top: 92px; width: 120px; background: #FFD60A"></div>
+      <div data-hf-id="hf-kz7g" class="e-bar" style="left: 54px; top: 122px; width: 92px; background: #C8C8CC"></div>
+      <div data-hf-id="hf-xb6n" class="e-bar" style="left: 46px; top: 152px; width: 108px; background: #8A8A90"></div>
+    </div>
+    <div data-hf-id="hf-b5hy" id="e-name"><span data-hf-id="hf-gtkt">N</span><span data-hf-id="hf-txoq">o</span><span data-hf-id="hf-r5jj">t</span><span data-hf-id="hf-ypd2">c</span><span data-hf-id="hf-vx7v">h</span><span data-hf-id="hf-g0yr">P</span><span data-hf-id="hf-ry5l">r</span><span data-hf-id="hf-rzwu">o</span><span data-hf-id="hf-uqas">m</span><span data-hf-id="hf-sqrn">p</span><span data-hf-id="hf-b5yn">t</span><span data-hf-id="hf-xwr0">e</span><span data-hf-id="hf-t02l">r</span></div>
+    <div data-hf-id="hf-q61h" id="e-tag"><span data-hf-id="hf-y5hc">Starts</span> <span data-hf-id="hf-91x1">with</span> <span data-hf-id="hf-djna">Windows</span> <span data-hf-id="hf-1bmq">&#xB7;</span> <span data-hf-id="hf-yh5b">Free</span> <span data-hf-id="hf-p210">for</span> <span data-hf-id="hf-4yze">Windows</span> <span data-hf-id="hf-2xa8">10</span> <span data-hf-id="hf-kyh6">and</span> <span data-hf-id="hf-2iz7">11</span></div>
+    <div data-hf-id="hf-19h5" id="e-btn"><span data-hf-id="hf-yw37" class="np-icon">&#xE896;</span><span data-hf-id="hf-8s4r">Download for Windows</span></div>
+  </div>
+
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      // The icon drops from where the notch lives and lands with weight.
+      tl.fromTo("#e-icon", { opacity: 0, y: -230, scale: 0.55, filter: "blur(8px)" },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.75, ease: "expo.out" }, 0.05);
+      tl.fromTo("#e-name span", { opacity: 0, filter: "blur(5px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.05, ease: "power2.out" }, 0.55);
+      tl.fromTo("#e-tag span", { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.05, ease: "power2.out" }, 1.3);
+      tl.fromTo("#e-btn", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.45, ease: "expo.out" }, 2.05);
+      window.__timelines["endcard"] = tl;
+    })();
+  </script>
+</template>

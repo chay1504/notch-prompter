@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NotchPrompter — a teleprompter under your webcam</title>
+  <meta name="description" content="A free teleprompter under your webcam for Windows and Mac. Read your script while looking at the lens. Local scripts, adjustable pace, and keyboard controls." />
+  <meta name="theme-color" content="#F2F0EC" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="NotchPrompter — your script, right under the camera" />
+  <meta property="og:description" content="A Dynamic Island teleprompter for Windows and Mac. Your script, right under the camera." />
+  <meta property="og:image" content="media/poster.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/icon-256.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="NotchPrompter home">
+        <img src="assets/icon-256.png" alt="" width="28" height="28" />
+        <span>NotchPrompter</span>
+      </a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#video">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#shortcuts">Shortcuts</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-small" href="#downloads">Download</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">For Windows 10 &amp; 11 · macOS 13+ beta</p>
+        <h1>Your script, right under the camera.</h1>
+        <p class="lede">NotchPrompter turns the space under your laptop's webcam into a Dynamic&nbsp;Island teleprompter. Read your reel script while looking straight at the lens. Your script stays on your computer.</p>
+        <div class="cta-row">
+          <a class="btn btn-big" href="downloads/NotchPrompter.exe" download="NotchPrompter.exe" data-download>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn-big" href="https://github.com/chay1504/notch-prompter/releases/download/v1.0.0-beta.1/NotchPrompter-macOS-universal.zip" data-mac-download>Download for Mac (beta)</a>
+          <a class="btn btn-ghost btn-big" href="#video">Watch the 45-second demo</a>
+        </div>
+        <p class="meta">Free &middot; Windows: one 178&nbsp;KB file &middot; Mac: Apple Silicon &amp; Intel &middot; <span id="os-note">saved locally</span></p>
+        <p class="caption">Windows supports capture exclusion. On Mac, hiding from recordings is <b>not guaranteed</b>: share a specific app window or record webcam-only, and test first.</p>
+      </div>
+
+      <!-- Interactive island: the real app's geometry, springs and reading behaviour, in the browser -->
+      <div class="wrap">
+        <div class="laptop" id="laptop">
+          <div class="bezel"><span class="lens"><i></i></span><span class="led" id="led"></span></div>
+          <div class="screen" id="screen">
+            <div class="island" id="island" role="button" tabindex="0" aria-label="Teleprompter demo. Hover to peek, click to open and play.">
+              <div class="peek" id="peek"><span class="peek-title">Teleprompter</span><span class="peek-hint">Ctrl+Alt+T</span></div>
+              <div class="prompt" id="prompt"><div class="prompt-text" id="promptText"></div></div>
+              <div class="countdown" id="countdown" aria-hidden="true"></div>
+              <div class="status" id="status"></div>
+              <div class="dock" id="dock">
+                <button type="button" class="ib" data-act="restart" aria-label="Back to the top">
+                  <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="ib" data-act="slower" aria-label="Slower">&minus;</button>
+                <span class="wpm" id="wpm">140 wpm</span>
+                <button type="button" class="ib" data-act="faster" aria-label="Faster">+</button>
+                <button type="button" class="ib play" data-act="play" aria-label="Play or pause" id="playBtn">
+                  <svg viewBox="0 0 24 24" class="i-play"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+                  <svg viewBox="0 0 24 24" class="i-pause"><path d="M8 5h3v14H8zM13 5h3v14h-3z" fill="currentColor"/></svg>
+                </button>
+                <button type="button" class="ib" data-act="collapse" aria-label="Collapse">
+                  <svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+              <span class="cam-dot" id="camDot"></span>
+            </div>
+            <p class="try" id="tryHint"><span>&#8593;</span> Hover the notch, then click it</p>
+            <button type="button" class="cam-toggle" id="camToggle" aria-pressed="false">
+              <span class="dot"></span> Simulate the camera turning on
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section class="section" id="video">
+      <div class="wrap narrow center">
+        <p class="eyebrow">How it works</p>
+        <h2>Everything it does, in 45 seconds.</h2>
+      </div>
+      <div class="wrap">
+        <figure class="video-frame">
+          <video id="howto" controls playsinline preload="metadata" poster="media/poster.jpg" muted>
+            <source src="media/notchprompter-how-to.mp4" type="video/mp4" />
+            Your browser can't play this video. <a href="media/notchprompter-how-to.mp4">Download it instead</a>.
+          </video>
+        </figure>
+        <p class="caption center">Windows demo. Mac uses Control + Option shortcuts and may appear in screen recordings. Plays muted; unmute for clicks and keys.</p>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="section" id="steps">
+      <div class="wrap narrow center">
+        <p class="eyebrow">Set up in a minute</p>
+        <h2>Three steps to your first take.</h2>
+      </div>
+      <div class="wrap">
+        <ol class="steps">
+          <li>
+            <span class="step-n">1</span>
+            <h3>Download and open it</h3>
+            <p>On Windows, run <b>NotchPrompter.exe</b>. On Mac, unzip the download and drag <b>NotchPrompter.app</b> to Applications. Open the tray or menu bar icon for settings.</p>
+          </li>
+          <li>
+            <span class="step-n">2</span>
+            <h3>Paste your script</h3>
+            <p>Press <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>E</kbd> on Windows, or <kbd>Control</kbd> <kbd>Option</kbd> <kbd>E</kbd> on Mac, and paste. Wrap words in <code>*asterisks*</code> to highlight them; use <code>#</code> for a section label.</p>
+          </li>
+          <li>
+            <span class="step-n">3</span>
+            <h3>Hit record and press play</h3>
+            <p>Open the island and press <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>Space</kbd> (Mac: Control + Option + Space) for a 3-2-1 countdown. Check your recording setup, then read with your eyes on the lens.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="wrap narrow center">
+        <p class="eyebrow">Features</p>
+        <h2>Small notch. Big difference on camera.</h2>
+      </div>
+      <div class="wrap bento">
+        <article class="tile tile-wide tile-dark">
+          <div class="tile-copy">
+            <h3>Eye contact, built in</h3>
+            <p>The line you're reading sits at the very top of the island, a finger's width below the lens. Viewers see you looking at them, not at a script.</p>
+          </div>
+          <div class="viz viz-eye" aria-hidden="true">
+            <div class="mini-bezel"><span class="mini-lens"></span></div>
+            <div class="mini-island"><span>Your first second is the <em>whole</em> video.</span></div>
+          </div>
+        </article>
+
+        <article class="tile">
+          <div class="viz viz-split" aria-hidden="true">
+            <div class="pane"><div class="pane-top"></div><div class="pane-island"></div><small>Your screen</small></div>
+            <div class="pane"><div class="pane-top"></div><div class="pane-ghost"></div><small>Recording</small><b class="rec">REC</b></div>
+          </div>
+          <h3>Capture exclusion on Windows</h3>
+          <p>The Windows app asks supported capture tools to leave it out. Mac recordings may include the overlay: share an app window and test your setup first.</p>
+        </article>
+
+        <article class="tile">
+          <div class="viz viz-cam" aria-hidden="true"><span class="cam-pill"><i></i></span></div>
+          <h3>Opens with your camera</h3>
+          <p>Automatic opening detects supported cameras in use, with a green dot while active. Camera and driver support varies; manual controls are always available.</p>
+        </article>
+
+        <article class="tile">
+          <div class="viz viz-wpm" aria-hidden="true"><span class="wpm-chip">160 words per minute</span></div>
+          <h3>Paced in words per minute</h3>
+          <p>Set a speaking pace once. Change the text size or width and the pace stays the same. Remaining time is always shown.</p>
+        </article>
+
+        <article class="tile">
+          <div class="viz viz-keys" aria-hidden="true"><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd class="wide">Space</kbd></div>
+          <h3>Shortcuts from any app</h3>
+          <p>Play, pause, change speed and size, or jump back a few lines without leaving your camera app.</p>
+        </article>
+
+        <article class="tile tile-full">
+          <div class="viz viz-stats" aria-hidden="true"><span><b>178</b>KB</span><span><b>0%</b>CPU idle</span></div>
+          <div><h3>Tiny and always ready</h3>
+          <p>A small Windows executable or a native Mac app. Tray and menu bar controls keep it close; Mac login startup is optional.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Shortcuts -->
+    <section class="section" id="shortcuts">
+      <div class="wrap narrow center">
+        <p class="eyebrow">Keyboard</p>
+        <h2>Drive it without touching the mouse.</h2>
+      </div>
+      <div class="wrap narrow">
+        <table class="keys">
+          <tbody>
+            <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Space</kbd></td><td>Play or pause (the first play counts down 3-2-1)</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>T</kbd></td><td>Show or hide the teleprompter</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>=</kbd> / <kbd>-</kbd></td><td>Faster or slower (hold to repeat)</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>]</kbd> / <kbd>[</kbd></td><td>Bigger or smaller text</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>PgUp</kbd> / <kbd>PgDn</kbd></td><td>Jump back or forward a few lines</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>R</kbd></td><td>Back to the top</td></tr>
+            <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>E</kbd></td><td>Open the script editor</td></tr>
+          </tbody>
+        </table>
+        <p class="caption">On Mac, use <kbd>Control</kbd> + <kbd>Option</kbd> in place of Ctrl + Alt. On either platform, click text to play or pause, scroll to seek, Control + scroll for text size, Shift + scroll for speed, and drag the bottom edge to resize.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap narrow center">
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions, answered.</h2>
+      </div>
+      <div class="wrap narrow faq">
+        <details>
+          <summary>Does it really not show up in recordings?</summary>
+          <p>On Windows, NotchPrompter requests <code>WDA_EXCLUDEFROMCAPTURE</code> so compatible capture tools can omit it. Test your recorder and sharing setup. On Mac, capture exclusion is not guaranteed; the overlay may appear in display recordings and screen sharing. Share a particular app window or record webcam-only. Neither app can hide from a camera pointed at your screen.</p>
+        </details>
+        <details>
+          <summary>Windows says "Windows protected your PC". Is that normal?</summary>
+          <p>Yes, for now. The app isn't code-signed yet, so Microsoft SmartScreen warns about new downloads. Click <b>More info</b>, then <b>Run anyway</b>. Your browser may also ask you to confirm the download. You can compare the file's checksum below with the one on this page.</p>
+        </details>
+        <details>
+          <summary>Which versions of Windows does it support?</summary>
+          <p>Windows 10 (version 2004 or newer) and Windows 11. It runs on .NET Framework 4.8, which those versions already include, so there's nothing else to install. On older Windows 10 builds it still works, but recordings show a black box instead of hiding it completely.</p>
+        </details>
+        <details>
+          <summary>Is there a Mac version?</summary>
+          <p>Yes, a native Mac beta for macOS 13+, with Apple Silicon and Intel in one download. Unzip, drag NotchPrompter.app to Applications, and open it. It works with and without a physical notch. This beta is ad-hoc signed, not notarized, so macOS may block first launch. Follow <a href="https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac">Apple's guidance</a> if you trust this download. Mac capture exclusion is not guaranteed.</p>
+        </details>
+        <details>
+          <summary>Where is my script saved?</summary>
+          <p>Windows: <code>%APPDATA%\NotchPrompter\script.txt</code>. Mac: <code>~/Library/Application Support/NotchPrompter/script.txt</code>. Both are local text files. Nothing is uploaded.</p>
+        </details>
+        <details>
+          <summary>How do I stop it starting with Windows, or remove it?</summary>
+          <p>Right-click the tray icon and untick <b>Start with Windows</b>, then choose <b>Quit</b>. To remove it completely, delete <code>NotchPrompter.exe</code> and the <code>%APPDATA%\NotchPrompter</code> folder.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final" id="downloads">
+      <div class="wrap center">
+        <img src="assets/icon-256.png" alt="" width="96" height="96" class="final-icon" />
+        <h2>Look at the lens. Read every word.</h2>
+        <a class="btn btn-big" href="downloads/NotchPrompter.exe" download="NotchPrompter.exe" data-download>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download for Windows
+        </a>
+        <a class="btn btn-big" href="https://github.com/chay1504/notch-prompter/releases/download/v1.0.0-beta.1/NotchPrompter-macOS-universal.zip" data-mac-download>Download for Mac (beta)</a>
+        <p class="meta">Windows 1.0.0 &middot; 178 KB &middot; Mac beta: macOS 13+, Apple Silicon &amp; Intel</p>
+        <p class="caption">Mac download is an unsigned-by-Apple beta. Recording invisibility is not guaranteed. <a href="https://github.com/chay1504/notch-prompter/releases/tag/v1.0.0-beta.1">Release notes and checksums</a> · <a href="https://github.com/chay1504/notch-prompter">Source code</a></p>
+        <p class="checksum">SHA-256 <code>b1f6b2577769955955db8974e60f68ae58f30706fe5e5a94f4137212561fc759</code></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>NotchPrompter</span>
+      <span>Made for creators on Windows and Mac.</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

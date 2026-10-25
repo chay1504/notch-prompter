@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- .NET Framework 4.8 ships with every Windows 10 (1903+) and Windows 11 PC,
+         so the output is one small .exe with nothing to install. -->
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>NotchPrompter</AssemblyName>
+    <RootNamespace>NotchPrompter</RootNamespace>
+    <StartupObject>NotchPrompter.Program</StartupObject>
+    <ApplicationIcon>assets\app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugType>none</DebugType>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Product>NotchPrompter</Product>
+    <AssemblyTitle>NotchPrompter - Dynamic Island teleprompter</AssemblyTitle>
+    <Description>A teleprompter that lives in a notch under your webcam and never shows up in screen recordings.</Description>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assets\app.ico" LogicalName="NotchPrompter.app.ico" />
+  </ItemGroup>
+
+</Project>

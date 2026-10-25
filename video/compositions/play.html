@@ -1,0 +1,186 @@
+<template>
+  <style>
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI"); font-weight: 400; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Semibold"); font-weight: 600; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Bold"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "NP Segoe", sans-serif; color: #111111; }
+    .np-ground { position: absolute; inset: 0; background: radial-gradient(1100px 760px at 50% 0%, #F5F3EF 0%, #E9E6E1 72%); }
+    .np-bezel { position: absolute; left: 0; top: 0; width: 1920px; height: 92px; background: #0D0D0F; border-bottom: 1px solid #26262A; }
+    .np-lens { position: absolute; left: 942px; top: 28px; width: 36px; height: 36px; border-radius: 50%; background: #1D1D21; }
+    .np-glass { position: absolute; left: 8px; top: 8px; width: 20px; height: 20px; border-radius: 50%; background: #050507; }
+    .np-glint { position: absolute; left: 5px; top: 5px; width: 6px; height: 6px; border-radius: 50%; background: #44506A; }
+    .np-led { position: absolute; left: 997px; top: 43px; width: 6px; height: 6px; border-radius: 50%; background: #2A2A2E; }
+    .np-island { position: absolute; left: 0; top: 92px; width: 1920px; height: 600px; background: #000000;
+      clip-path: path("M 448 0 A 16 16 0 0 1 464 16 L 464 272 A 48 48 0 0 0 512 320 L 1408 320 A 48 48 0 0 0 1456 272 L 1456 16 A 16 16 0 0 1 1472 0 Z"); }
+    .np-prompt { position: absolute; left: 512px; top: 10px; width: 896px; height: 300px; overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0px, #000 26px, #000 52%, rgba(0, 0, 0, 0.42) 100%);
+      mask-image: linear-gradient(to bottom, transparent 0px, #000 26px, #000 52%, rgba(0, 0, 0, 0.42) 100%); }
+    .np-text { position: absolute; left: 0; top: 26px; width: 896px; text-align: center; color: #F5F5F7;
+      font-weight: 600; font-size: 44px; line-height: 58px; }
+    .np-text > div { height: 58px; white-space: nowrap; }
+    .np-text > .np-label { font-size: 22px; font-weight: 700; color: #64D2FF; letter-spacing: 0.06em; line-height: 72px; }
+    .np-text > .np-gap { height: 29px; }
+    .np-hi { color: #FFD60A; font-weight: 700; }
+
+    #p-led-on { position: absolute; left: 997px; top: 43px; width: 6px; height: 6px; border-radius: 50%; background: #F2F2F2; opacity: 0; }
+    #p-cd { position: absolute; left: 464px; top: 60px; width: 992px; height: 150px; }
+    #p-cd span { position: absolute; left: 0; top: 0; width: 992px; text-align: center; font-size: 110px; font-weight: 700;
+      line-height: 150px; color: #FFFFFF; opacity: 0; }
+    #p-hud { position: absolute; left: 464px; top: 262px; width: 992px; height: 40px; }
+    #p-hud span { position: absolute; left: 0; top: 0; width: 992px; text-align: center; font-size: 28px; color: rgba(255, 255, 255, 0.8); opacity: 0; }
+    #p-hudshade { position: absolute; left: 464px; top: 214px; width: 992px; height: 106px; opacity: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 45%, #000 100%); }
+    #p-dot { position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-radius: 50%; background: #30D158; opacity: 0; }
+
+    #p-line1, #p-line2, #p-line3 { position: absolute; left: 150px; top: 540px; width: 760px; font-size: 76px; font-weight: 700;
+      line-height: 1.12; letter-spacing: -0.015em; }
+    #p-line1 span, #p-line2 span, #p-line3 span { display: inline-block; opacity: 0; }
+
+    .p-keys { position: absolute; left: 1000px; top: 640px; width: 780px; height: 130px; display: flex; align-items: center;
+      justify-content: center; gap: 22px; }
+    .p-key { height: 110px; min-width: 128px; padding: 0 30px; border-radius: 18px; background: #FBFBFA;
+      box-shadow: 0 7px 0 #CFCBC4, 0 14px 26px rgba(0, 0, 0, 0.12); display: flex; align-items: center; justify-content: center;
+      font-size: 40px; font-weight: 600; color: #222222; opacity: 0; }
+    .p-key.p-wide { min-width: 300px; }
+    .p-plus { font-size: 44px; font-weight: 600; color: #67645E; opacity: 0; }
+  </style>
+
+  <div data-hf-id="hf-rpet" id="root" data-composition-id="play" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-8oe6" class="np-ground"></div>
+    <div data-hf-id="hf-scsp" class="np-bezel"></div>
+    <div data-hf-id="hf-hykb" class="np-lens"><div data-hf-id="hf-qc5p" class="np-glass"><div data-hf-id="hf-4iqp" class="np-glint"></div></div></div>
+    <div data-hf-id="hf-edcq" class="np-led"></div>
+    <div data-hf-id="hf-doyr" id="p-led-on"></div>
+
+    <div data-hf-id="hf-0mzc" id="p-island" class="np-island">
+      <div data-hf-id="hf-pg58" id="p-prompt" class="np-prompt">
+        <div data-hf-id="hf-wiic" id="p-text" class="np-text">
+          <div data-hf-id="hf-6qsk" class="np-label">HOOK</div>
+          <div data-hf-id="hf-e6gv">Three things I wish I knew</div>
+          <div data-hf-id="hf-ynvn">before my first 100 reels.</div>
+          <div data-hf-id="hf-dbxt" class="np-gap"></div>
+          <div data-hf-id="hf-p1pl" class="np-label">ONE</div>
+          <div data-hf-id="hf-imql">Your first second is the <span data-hf-id="hf-xh1o" class="np-hi">whole</span> video.</div>
+          <div data-hf-id="hf-px1z">Open on the payoff, not the intro.</div>
+          <div data-hf-id="hf-b0kl" class="np-gap"></div>
+          <div data-hf-id="hf-3dz7" class="np-label">TWO</div>
+          <div data-hf-id="hf-geb1">Most people watch on mute,</div>
+          <div data-hf-id="hf-z8k5">so put every line on screen.</div>
+          <div data-hf-id="hf-c7ho" class="np-gap"></div>
+          <div data-hf-id="hf-372x" class="np-label">THREE</div>
+          <div data-hf-id="hf-khvj">Post, learn, repeat.</div>
+        </div>
+      </div>
+      <div data-hf-id="hf-swqt" id="p-cd"><span data-hf-id="hf-gapm" id="p-cd3">3</span><span data-hf-id="hf-ye8y" id="p-cd2">2</span><span data-hf-id="hf-5w9m" id="p-cd1">1</span></div>
+      <div data-hf-id="hf-0wq2" id="p-hudshade"></div>
+      <div data-hf-id="hf-9wrn" id="p-hud"><span data-hf-id="hf-803c" id="p-hud150">150 words per minute</span><span data-hf-id="hf-h5aw" id="p-hud160">160 words per minute</span></div>
+      <div data-hf-id="hf-65st" id="p-dot"></div>
+    </div>
+
+    <div data-hf-id="hf-z203" id="p-line1"><span data-hf-id="hf-e2gw">Press</span> <span data-hf-id="hf-gj87">play</span></div>
+    <div data-hf-id="hf-o6ig" id="p-line2"><span data-hf-id="hf-ej3b">Set</span> <span data-hf-id="hf-ziue">your</span> <span data-hf-id="hf-e6um">pace</span></div>
+    <div data-hf-id="hf-oy69" id="p-line3"><span data-hf-id="hf-t0y2">Camera</span> <span data-hf-id="hf-llgp">on?</span><br data-hf-id="hf-x5px"><span data-hf-id="hf-nqck">It</span> <span data-hf-id="hf-em6y">opens</span> <span data-hf-id="hf-66m8">by</span> <span data-hf-id="hf-9v4m">itself</span></div>
+
+    <div data-hf-id="hf-z8dn" id="p-keysA" class="p-keys">
+      <div data-hf-id="hf-y8i5" id="p-a-ctrl" class="p-key">Ctrl</div><div data-hf-id="hf-rfiu" class="p-plus">+</div>
+      <div data-hf-id="hf-ux0n" id="p-a-alt" class="p-key">Alt</div><div data-hf-id="hf-ablm" class="p-plus">+</div>
+      <div data-hf-id="hf-8vcj" id="p-a-space" class="p-key p-wide">Space</div>
+    </div>
+    <div data-hf-id="hf-qkhs" id="p-keysB" class="p-keys">
+      <div data-hf-id="hf-kclo" id="p-b-ctrl" class="p-key">Ctrl</div><div data-hf-id="hf-apwn" class="p-plus">+</div>
+      <div data-hf-id="hf-29qq" id="p-b-alt" class="p-key">Alt</div><div data-hf-id="hf-b47o" class="p-plus">+</div>
+      <div data-hf-id="hf-ch4f" id="p-b-eq" class="p-key">=</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function island(w, h, r, e) {
+        var l = 960 - w / 2, rt = 960 + w / 2;
+        return 'path("M ' + (l - e) + ' 0 A ' + e + ' ' + e + ' 0 0 1 ' + l + ' ' + e + ' L ' + l + ' ' + (h - r) +
+          ' A ' + r + ' ' + r + ' 0 0 0 ' + (l + r) + ' ' + h + ' L ' + (rt - r) + ' ' + h + ' A ' + r + ' ' + r +
+          ' 0 0 0 ' + rt + ' ' + (h - r) + ' L ' + rt + ' ' + e + ' A ' + e + ' ' + e + ' 0 0 1 ' + (rt + e) + ' 0 Z")';
+      }
+      function spring(zeta, omega) {
+        var wd = omega * Math.sqrt(1 - zeta * zeta);
+        return function (t) {
+          if (t >= 1) return 1;
+          return 1 - Math.exp(-zeta * omega * t) * (Math.cos(wd * t) + (zeta * omega / wd) * Math.sin(wd * t));
+        };
+      }
+      var SPRING = spring(0.68, 9);
+      var COLLAPSED = island(294, 45, 19, 11), EXPANDED = island(992, 320, 48, 16);
+      function wordsIn(sel, at) {
+        tl.fromTo(sel, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" }, at);
+      }
+      function wordsOut(sel, at) {
+        tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: 0.2, stagger: 0.03, ease: "power2.in" }, at);
+      }
+      function keysIn(sel, at) {
+        tl.fromTo(sel + " .p-key, " + sel + " .p-plus", { opacity: 0, scale: 0.86 },
+          { opacity: 1, scale: 1, duration: 0.45, stagger: 0.06, ease: "expo.out" }, at);
+      }
+      function keysOut(sel, at) {
+        tl.to(sel + " .p-key, " + sel + " .p-plus", { opacity: 0, filter: "blur(6px)", duration: 0.2, stagger: 0.02, ease: "power2.in" }, at);
+      }
+      function press(sel, at, hold) {
+        tl.to(sel, { y: 7, boxShadow: "0 0px 0 #CFCBC4, 0 6px 12px rgba(0,0,0,0.10)", duration: 0.06, ease: "power2.out" }, at);
+        tl.to(sel, { y: 0, boxShadow: "0 7px 0 #CFCBC4, 0 14px 26px rgba(0,0,0,0.12)", duration: 0.12, ease: "power2.out" }, at + 0.06 + (hold || 0));
+      }
+      // A digit pops in large and settles, then fades before the next one.
+      function digit(sel, at) {
+        tl.fromTo(sel, { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, at);
+        tl.to(sel, { opacity: 0, duration: 0.18, ease: "power2.in" }, at + 0.78);
+      }
+
+      var tl = gsap.timeline({ paused: true });
+
+      // Ctrl+Alt+Space, then the 3-2-1 countdown inside the island.
+      wordsIn("#p-line1 span", 0.3);
+      keysIn("#p-keysA", 0.3);
+      press("#p-a-ctrl", 1.0, 0.1);
+      press("#p-a-alt", 1.03, 0.07);
+      press("#p-a-space", 1.06, 0.04);
+      tl.to("#p-prompt", { opacity: 0.22, duration: 0.2, ease: "power2.out" }, 1.1);
+      digit("#p-cd3", 1.15);
+      digit("#p-cd2", 2.15);
+      digit("#p-cd1", 3.15);
+      tl.to("#p-prompt", { opacity: 1, duration: 0.2, ease: "power2.out" }, 4.0);
+      wordsOut("#p-line1 span", 4.75);
+      keysOut("#p-keysA", 4.85);
+
+      // Scrolling at a steady pace, then faster after each Ctrl+Alt+=.
+      tl.fromTo("#p-text", { y: 0 }, { y: -102, duration: 1.6, ease: "none" }, 4.1);
+      tl.to("#p-text", { y: -137, duration: 0.5, ease: "none" }, 5.7);
+      tl.to("#p-text", { y: -242, duration: 1.4, ease: "none" }, 6.2);
+
+      wordsIn("#p-line2 span", 5.0);
+      keysIn("#p-keysB", 5.05);
+      press("#p-b-ctrl", 5.55, 0.75);
+      press("#p-b-alt", 5.55, 0.75);
+      press("#p-b-eq", 5.6, 0);
+      press("#p-b-eq", 6.1, 0);
+      tl.fromTo("#p-hudshade", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.out" }, 5.62);
+      tl.fromTo("#p-hud150", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out" }, 5.65);
+      tl.to("#p-hud150", { opacity: 0, filter: "blur(6px)", duration: 0.1, ease: "power2.in" }, 6.12);
+      tl.fromTo("#p-hud160", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out" }, 6.18);
+      tl.to("#p-hud160, #p-hudshade", { opacity: 0, duration: 0.2, ease: "power2.in" }, 7.35);
+      wordsOut("#p-line2 span", 7.4);
+      keysOut("#p-keysB", 7.45);
+
+      // Closed... then the camera turns on: LED, green dot, and the island opens by itself.
+      tl.to("#p-prompt", { opacity: 0, filter: "blur(6px)", duration: 0.15, ease: "power2.in" }, 7.6);
+      tl.to("#p-island", { clipPath: COLLAPSED, duration: 0.75, ease: SPRING }, 7.6);
+      wordsIn("#p-line3 span", 7.8);
+      tl.fromTo("#p-led-on", { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, 8.6);
+      tl.fromTo("#p-dot", { x: 1075, y: 16, opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, 8.62);
+      tl.to("#p-island", { clipPath: EXPANDED, duration: 0.8, ease: SPRING }, 9.1);
+      tl.to("#p-dot", { x: 1414, y: 26, duration: 0.8, ease: SPRING }, 9.1);
+      tl.to("#p-prompt", { opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power2.out" }, 9.4);
+      wordsOut("#p-line3 span", 11.4);
+
+      window.__timelines["play"] = tl;
+    })();
+  </script>
+</template>

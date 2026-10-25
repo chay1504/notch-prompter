@@ -1,0 +1,126 @@
+<template>
+  <style>
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI"); font-weight: 400; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Semibold"); font-weight: 600; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Bold"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "NP Segoe", sans-serif; color: #111111; }
+    .np-ground { position: absolute; inset: 0; background: radial-gradient(1100px 760px at 50% 0%, #F5F3EF 0%, #E9E6E1 72%); }
+    .np-bezel { position: absolute; left: 0; top: 0; width: 1920px; height: 92px; background: #0D0D0F; border-bottom: 1px solid #26262A; }
+    .np-lens { position: absolute; left: 942px; top: 28px; width: 36px; height: 36px; border-radius: 50%; background: #1D1D21; }
+    .np-glass { position: absolute; left: 8px; top: 8px; width: 20px; height: 20px; border-radius: 50%; background: #050507; }
+    .np-glint { position: absolute; left: 5px; top: 5px; width: 6px; height: 6px; border-radius: 50%; background: #44506A; }
+    .np-led-on { position: absolute; left: 997px; top: 43px; width: 6px; height: 6px; border-radius: 50%; background: #F2F2F2; }
+    .np-island { position: absolute; left: 0; top: 92px; width: 1920px; height: 600px; background: #000000;
+      clip-path: path("M 448 0 A 16 16 0 0 1 464 16 L 464 272 A 48 48 0 0 0 512 320 L 1408 320 A 48 48 0 0 0 1456 272 L 1456 16 A 16 16 0 0 1 1472 0 Z"); }
+    .np-prompt { position: absolute; left: 512px; top: 10px; width: 896px; height: 300px; overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0px, #000 26px, #000 52%, rgba(0, 0, 0, 0.42) 100%);
+      mask-image: linear-gradient(to bottom, transparent 0px, #000 26px, #000 52%, rgba(0, 0, 0, 0.42) 100%); }
+    .np-text { position: absolute; left: 0; top: -216px; width: 896px; text-align: center; color: #F5F5F7;
+      font-weight: 600; font-size: 44px; line-height: 58px; }
+    .np-text > div { height: 58px; white-space: nowrap; }
+    .np-text > .np-label { font-size: 22px; font-weight: 700; color: #64D2FF; letter-spacing: 0.06em; line-height: 72px; }
+    .np-text > .np-gap { height: 29px; }
+    .np-hi { color: #FFD60A; font-weight: 700; }
+    .np-dot { position: absolute; left: 1414px; top: 26px; width: 12px; height: 12px; border-radius: 50%; background: #30D158; }
+
+    .y-pane { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; }
+    .y-frame { position: absolute; inset: 0; box-shadow: inset 0 0 0 22px #0D0D0F; opacity: 0; }
+    #y-right { opacity: 0; }
+    #y-right .y-frame { opacity: 1; }
+    #y-ghost { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; opacity: 0; overflow: visible; }
+
+    #y-rec { position: absolute; left: 1012px; top: 280px; height: 54px; padding: 0 20px; border-radius: 12px; background: #111111;
+      display: flex; align-items: center; gap: 12px; color: #FFFFFF; font-size: 28px; font-weight: 600; opacity: 0; }
+    #y-rec i { width: 14px; height: 14px; border-radius: 50%; background: #FF3B30; display: block; }
+    .y-label { position: absolute; top: 738px; width: 826px; text-align: center; font-size: 34px; font-weight: 600; opacity: 0; }
+    #y-lab1 { left: 110px; }
+    #y-lab2 { left: 985px; }
+    #y-line { position: absolute; left: 0; top: 818px; width: 1920px; text-align: center; font-size: 66px; font-weight: 700;
+      letter-spacing: -0.015em; line-height: 1.1; }
+    #y-line span, #y-sub span { display: inline-block; opacity: 0; }
+    .y-mark { background: linear-gradient(transparent 58%, #FFD60A 58%, #FFD60A 92%, transparent 92%); }
+    #y-sub { position: absolute; left: 0; top: 916px; width: 1920px; text-align: center; font-size: 34px; font-weight: 600; color: #55555B; }
+  </style>
+
+  <div data-hf-id="hf-s4vk" id="root" data-composition-id="payoff" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-8oe6" class="np-ground"></div>
+
+    <div data-hf-id="hf-5uji" id="y-right" class="y-pane">
+      <div data-hf-id="hf-ysma" class="np-ground"></div>
+      <div data-hf-id="hf-scsp" class="np-bezel"></div>
+      <div data-hf-id="hf-hykb" class="np-lens"><div data-hf-id="hf-qc5p" class="np-glass"><div data-hf-id="hf-4iqp" class="np-glint"></div></div></div>
+      <div data-hf-id="hf-vpq4" class="np-led-on"></div>
+      <svg data-hf-id="hf-wpr3" id="y-ghost" viewBox="0 0 1920 1080">
+        <path data-hf-id="hf-v0gu" d="M 448 92 A 16 16 0 0 1 464 108 L 464 364 A 48 48 0 0 0 512 412 L 1408 412 A 48 48 0 0 0 1456 364 L 1456 108 A 16 16 0 0 1 1472 92"
+              fill="none" stroke="#111111" stroke-opacity="0.38" stroke-width="5" stroke-dasharray="18 14" />
+      </svg>
+      <div data-hf-id="hf-zng1" class="y-frame"></div>
+    </div>
+
+    <div data-hf-id="hf-3mb7" id="y-left" class="y-pane">
+      <div data-hf-id="hf-z6xb" class="np-ground"></div>
+      <div data-hf-id="hf-8hj1" class="np-bezel"></div>
+      <div data-hf-id="hf-enzv" class="np-lens"><div data-hf-id="hf-67up" class="np-glass"><div data-hf-id="hf-r3lh" class="np-glint"></div></div></div>
+      <div data-hf-id="hf-c7zo" class="np-led-on"></div>
+      <div data-hf-id="hf-q6ag" class="np-island">
+        <div data-hf-id="hf-h6l9" class="np-prompt">
+          <div data-hf-id="hf-3k1a" class="np-text">
+            <div data-hf-id="hf-6qsk" class="np-label">HOOK</div>
+            <div data-hf-id="hf-e6gv">Three things I wish I knew</div>
+            <div data-hf-id="hf-ynvn">before my first 100 reels.</div>
+            <div data-hf-id="hf-dbxt" class="np-gap"></div>
+            <div data-hf-id="hf-p1pl" class="np-label">ONE</div>
+            <div data-hf-id="hf-imql">Your first second is the <span data-hf-id="hf-xh1o" class="np-hi">whole</span> video.</div>
+            <div data-hf-id="hf-px1z">Open on the payoff, not the intro.</div>
+            <div data-hf-id="hf-b0kl" class="np-gap"></div>
+            <div data-hf-id="hf-3dz7" class="np-label">TWO</div>
+            <div data-hf-id="hf-geb1">Most people watch on mute,</div>
+            <div data-hf-id="hf-z8k5">so put every line on screen.</div>
+            <div data-hf-id="hf-c7ho" class="np-gap"></div>
+            <div data-hf-id="hf-372x" class="np-label">THREE</div>
+            <div data-hf-id="hf-khvj">Post, learn, repeat.</div>
+          </div>
+        </div>
+        <div data-hf-id="hf-3gng" class="np-dot"></div>
+      </div>
+      <div data-hf-id="hf-jemm" id="y-left-frame" class="y-frame"></div>
+    </div>
+
+    <div data-hf-id="hf-705w" id="y-rec"><i data-hf-id="hf-wt6k"></i>REC&#xA0; 00:12</div>
+    <div data-hf-id="hf-9x2j" id="y-lab1" class="y-label">Your screen</div>
+    <div data-hf-id="hf-unmp" id="y-lab2" class="y-label">Your recording</div>
+    <div data-hf-id="hf-ltl9" id="y-line"><span data-hf-id="hf-hlos">On</span> <span data-hf-id="hf-ziue">your</span> <span data-hf-id="hf-wz9d">screen.</span> <span data-hf-id="hf-10ci" class="y-mark">Never</span> <span data-hf-id="hf-ftaa">in</span> <span data-hf-id="hf-2obu">your</span> <span data-hf-id="hf-d9ma">recording.</span></div>
+    <div data-hf-id="hf-3brj" id="y-sub"><span data-hf-id="hf-cj6d">Hidden</span> <span data-hf-id="hf-7ra1">from</span> <span data-hf-id="hf-6s6t">screen</span> <span data-hf-id="hf-c2m8">recorders,</span> <span data-hf-id="hf-wmeh">screen</span> <span data-hf-id="hf-9kqf">sharing</span> <span data-hf-id="hf-kyh6">and</span> <span data-hf-id="hf-ia76">screenshots</span></div>
+  </div>
+
+  <script>
+    (function () {
+      var S = 0.43;
+      var tl = gsap.timeline({ paused: true });
+
+      // Pull back: the stage becomes "your screen".
+      tl.fromTo("#y-left", { x: 0, y: 0, scale: 1, borderRadius: 0, boxShadow: "0 0px 0px rgba(0,0,0,0)" },
+        { x: 110, y: 250, scale: S, borderRadius: 44, boxShadow: "0 40px 90px rgba(0,0,0,0.22)", duration: 0.9, ease: "power2.inOut" }, 0);
+      tl.fromTo("#y-left-frame", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 0.3);
+
+      // The recording of the same desktop slides in beside it: no island.
+      tl.fromTo("#y-right", { x: 1245, y: 250, scale: S, opacity: 0, filter: "blur(10px)", borderRadius: 44, boxShadow: "0 40px 90px rgba(0,0,0,0.22)" },
+        { x: 985, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out" }, 0.7);
+      tl.fromTo("#y-rec", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, 1.15);
+      tl.fromTo("#y-lab1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.0);
+      tl.fromTo("#y-lab2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.35);
+
+      // Impact: the empty outline marks where the island isn't.
+      tl.fromTo("#y-ghost", { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, 2.6);
+      tl.fromTo("#y-line span", { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" }, 2.6);
+      tl.fromTo("#y-sub span", { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.05, ease: "power2.out" }, 3.4);
+
+      tl.to("#y-left, #y-right, #y-rec, #y-lab1, #y-lab2, #y-line span, #y-sub span",
+        { opacity: 0, filter: "blur(8px)", duration: 0.3, stagger: 0.01, ease: "power2.in" }, 6.75);
+
+      window.__timelines["payoff"] = tl;
+    })();
+  </script>
+</template>

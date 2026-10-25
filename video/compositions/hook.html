@@ -1,0 +1,109 @@
+<template>
+  <style>
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI"); font-weight: 400; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Semibold"); font-weight: 600; }
+    @font-face { font-family: "NP Segoe"; src: local("Segoe UI Bold"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "NP Segoe", sans-serif; color: #111111; }
+    .np-ground { position: absolute; inset: 0; background: radial-gradient(1100px 760px at 50% 0%, #F5F3EF 0%, #E9E6E1 72%); }
+    .np-bezel { position: absolute; left: 0; top: 0; width: 1920px; height: 92px; background: #0D0D0F; border-bottom: 1px solid #26262A; }
+    .np-lens { position: absolute; left: 942px; top: 28px; width: 36px; height: 36px; border-radius: 50%; background: #1D1D21; }
+    .np-glass { position: absolute; left: 8px; top: 8px; width: 20px; height: 20px; border-radius: 50%; background: #050507; }
+    .np-glint { position: absolute; left: 5px; top: 5px; width: 6px; height: 6px; border-radius: 50%; background: #44506A; }
+    .np-led { position: absolute; left: 997px; top: 43px; width: 6px; height: 6px; border-radius: 50%; background: #2A2A2E; }
+    .np-island { position: absolute; left: 0; top: 92px; width: 1920px; height: 600px; background: #000000;
+      clip-path: path("M 802 0 A 11 11 0 0 1 813 11 L 813 26 A 19 19 0 0 0 832 45 L 1088 45 A 19 19 0 0 0 1107 26 L 1107 11 A 11 11 0 0 1 1118 0 Z"); }
+
+    #h-line1, #h-line2 { position: absolute; left: 150px; top: 520px; width: 860px; font-size: 76px; font-weight: 700;
+      line-height: 1.12; letter-spacing: -0.015em; }
+    #h-line1 span, #h-line2 span { display: inline-block; }
+    #h-line2 span { opacity: 0; }
+    .h-mark { background: linear-gradient(transparent 58%, #FFD60A 58%, #FFD60A 92%, transparent 92%); }
+
+    #h-window { position: absolute; left: 1110px; top: 560px; width: 640px; height: 380px; background: #FFFFFF;
+      border-radius: 10px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2); overflow: hidden; transform-origin: 50% 50%; }
+    .h-titlebar { height: 44px; background: #F3F3F3; display: flex; align-items: center; padding: 0 18px;
+      font-size: 17px; color: #222222; border-bottom: 1px solid #E2E2E2; }
+    .h-menu { height: 34px; display: flex; gap: 22px; align-items: center; padding: 0 18px; font-size: 16px; color: #555555; }
+    .h-body { padding: 14px 24px; font-size: 28px; line-height: 40px; color: #1A1A1A; white-space: pre; }
+    #h-sight { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+  </style>
+
+  <div data-hf-id="hf-ktv8" id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-8oe6" class="np-ground"></div>
+
+    <div data-hf-id="hf-fv4s" id="h-window">
+      <div data-hf-id="hf-ccfk" class="h-titlebar">reel-script.txt - Notepad</div>
+      <div data-hf-id="hf-wx54" class="h-menu"><span data-hf-id="hf-ycg7">File</span><span data-hf-id="hf-ge9h">Edit</span><span data-hf-id="hf-yjbw">View</span></div>
+      <div data-hf-id="hf-v8az" class="h-body"># HOOK
+Three things I wish I knew
+before my first 100 reels.
+
+# ONE
+Your first second is the whole video.</div>
+    </div>
+
+    <svg data-hf-id="hf-eq9c" id="h-sight" viewBox="0 0 1920 1080">
+      <defs data-hf-id="hf-mh0t">
+        <mask data-hf-id="hf-gfp3" id="h-sight-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080">
+          <path data-hf-id="hf-18zy" id="h-sight-reveal" d="M 960 72 C 980 330, 1180 420, 1300 552" pathLength="1"
+                fill="none" stroke="#FFFFFF" stroke-width="12" stroke-dasharray="1 1" stroke-dashoffset="1" />
+        </mask>
+      </defs>
+      <g data-hf-id="hf-84z6" id="h-sight-group" mask="url(#h-sight-mask)">
+        <path data-hf-id="hf-rtgj" d="M 960 72 C 980 330, 1180 420, 1300 552" fill="none" stroke="#111111" stroke-opacity="0.6"
+              stroke-width="3.5" stroke-dasharray="10 12" stroke-linecap="round" />
+        <circle data-hf-id="hf-lghw" cx="1300" cy="552" r="7" fill="#111111" fill-opacity="0.6" />
+      </g>
+    </svg>
+
+    <div data-hf-id="hf-scsp" class="np-bezel"></div>
+    <div data-hf-id="hf-hykb" class="np-lens"><div data-hf-id="hf-qc5p" class="np-glass"><div data-hf-id="hf-4iqp" class="np-glint"></div></div></div>
+    <div data-hf-id="hf-edcq" class="np-led"></div>
+    <div data-hf-id="hf-c06o" id="h-island" class="np-island"></div>
+
+    <div data-hf-id="hf-2v4b" id="h-line1"><span data-hf-id="hf-lqan">Reading</span> <span data-hf-id="hf-ziue">your</span> <span data-hf-id="hf-6wwe">script</span><br data-hf-id="hf-x5px"><span data-hf-id="hf-dnos">on</span> <span data-hf-id="hf-m2of">camera?</span></div>
+    <div data-hf-id="hf-u78g" id="h-line2"><span data-hf-id="hf-ixae">Your</span> <span data-hf-id="hf-jo8n">eyes</span> <span data-hf-id="hf-es7i" class="h-mark">leave</span> <span data-hf-id="hf-3tds">the</span> <span data-hf-id="hf-3k75">lens</span></div>
+  </div>
+
+  <script>
+    (function () {
+      // Island outline at the app's own geometry x1.6: flush with the bezel, concave ears, rounded bottom.
+      function island(w, h, r, e) {
+        var l = 960 - w / 2, rt = 960 + w / 2;
+        return 'path("M ' + (l - e) + ' 0 A ' + e + ' ' + e + ' 0 0 1 ' + l + ' ' + e + ' L ' + l + ' ' + (h - r) +
+          ' A ' + r + ' ' + r + ' 0 0 0 ' + (l + r) + ' ' + h + ' L ' + (rt - r) + ' ' + h + ' A ' + r + ' ' + r +
+          ' 0 0 0 ' + rt + ' ' + (h - r) + ' L ' + rt + ' ' + e + ' A ' + e + ' ' + e + ' 0 0 1 ' + (rt + e) + ' 0 Z")';
+      }
+      // Closed-form damped spring (the app's island uses an under-damped spring, damping ratio 0.68).
+      function spring(zeta, omega) {
+        var wd = omega * Math.sqrt(1 - zeta * zeta);
+        return function (t) {
+          if (t >= 1) return 1;
+          return 1 - Math.exp(-zeta * omega * t) * (Math.cos(wd * t) + (zeta * omega / wd) * Math.sin(wd * t));
+        };
+      }
+      var SPRING = spring(0.68, 9);
+      var COLLAPSED = island(294, 45, 19, 11);
+
+      var tl = gsap.timeline({ paused: true });
+      var words1 = "#h-line1 span", words2 = "#h-line2 span";
+      // Frame 0 is the thumbnail, so the question is already on screen; the sight-line draws the problem.
+      tl.fromTo("#h-sight-reveal", { attr: { "stroke-dashoffset": 1 } },
+        { attr: { "stroke-dashoffset": 0 }, duration: 0.9, ease: "power2.inOut" }, 0.5);
+      tl.to(words1, { opacity: 0, filter: "blur(8px)", duration: 0.2, stagger: 0.03, ease: "power2.in" }, 2.2);
+      tl.fromTo(words2, { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" }, 2.4);
+
+      // The script window flies up and is swallowed by the notch.
+      tl.to("#h-sight-group", { opacity: 0, duration: 0.2, ease: "power2.in" }, 3.85);
+      tl.fromTo("#h-window", { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)" },
+        { x: -470, y: -636, scale: 0.08, filter: "blur(6px)", duration: 0.6, ease: "power3.in" }, 3.95);
+      tl.to("#h-window", { opacity: 0, duration: 0.12, ease: "none" }, 4.43);
+      tl.fromTo("#h-island", { clipPath: COLLAPSED }, { clipPath: island(334, 53, 22, 12), duration: 0.12, ease: "power2.out" }, 4.52);
+      tl.to("#h-island", { clipPath: COLLAPSED, duration: 0.6, ease: SPRING }, 4.64);
+      tl.to(words2, { opacity: 0, filter: "blur(8px)", duration: 0.2, stagger: 0.03, ease: "power2.in" }, 4.85);
+
+      window.__timelines["hook"] = tl;
+    })();
+  </script>
+</template>
