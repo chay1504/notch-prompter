@@ -49,8 +49,15 @@ final class AppController: NSObject, NSApplicationDelegate, NSTextViewDelegate, 
         }
         registerHotkeys()
         // Read device state only: never create a capture session or request camera access.
+        let deviceTypes: [AVCaptureDevice.DeviceType]
+        if #available(macOS 14.0, *) {
+            deviceTypes = [.builtInWideAngleCamera, .external, .continuityCamera]
+        } else {
+            deviceTypes = [.builtInWideAngleCamera, .externalUnknown]
+        }
+        let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: deviceTypes, mediaType: .video, position: .unspecified)
         cameraTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: true) { [weak self] _ in
-            let active = AVCaptureDevice.devices(for: .video).contains { $0.isInUseByAnotherApplication }
+            let active = discovery.devices.contains { $0.isInUseByAnotherApplication }
             self?.island.cameraChanged(active)
         }
         if !UserDefaults.standard.bool(forKey: "CaptureNoticeSeen") {
@@ -246,9 +253,21 @@ final class AppController: NSObject, NSApplicationDelegate, NSTextViewDelegate, 
             saveNow(); assert(lastSaveError == nil)
             assert(store.loadScript() == island.script)
             assert(store.loadPreferences().wpm == 150)
+            saveSmokeImage(island, name: "island-smoke.png")
+            saveSmokeImage(editor!.contentView!, name: "editor-smoke.png")
             print("AppKit smoke test passed: panel, editor, playback, controls and local saving")
             NSApp.terminate(nil)
         }
+    }
+    func saveSmokeImage(_ view: NSView, name: String) {
+        let output = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("dist")
+        do {
+            try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+            guard let image = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { fatalError("No view bitmap") }
+            view.cacheDisplay(in: view.bounds, to: image)
+            guard let data = image.representation(using: .png, properties: [:]) else { fatalError("No PNG data") }
+            try data.write(to: output.appendingPathComponent(name))
+        } catch { fatalError("Smoke image failed: \(error)") }
     }
 }
 

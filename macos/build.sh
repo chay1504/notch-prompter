@@ -20,7 +20,7 @@ if [ -f "$ICON_SOURCE" ]; then
 fi
 codesign --force --deep --sign - "$APP"
 codesign --verify --deep --strict "$APP"
-lipo -verify_arch arm64 x86_64 "$APP/Contents/MacOS/NotchPrompter"
+lipo "$APP/Contents/MacOS/NotchPrompter" -verify_arch arm64 x86_64
 ditto -c -k --sequesterRsrc --keepParent "$APP" dist/NotchPrompter-macOS-universal.zip
 shasum -a 256 dist/NotchPrompter-macOS-universal.zip > dist/SHA256-macOS.txt
 echo "Built universal macOS app (Apple Silicon + Intel), ad-hoc signed; not notarized."

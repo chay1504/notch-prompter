@@ -52,6 +52,7 @@ jobs:
           path: |
             macos/dist/NotchPrompter-macOS-universal.zip
             macos/dist/SHA256-macOS.txt
+            macos/dist/*-smoke.png
   website:
     runs-on: ubuntu-latest
     steps:
