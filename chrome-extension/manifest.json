@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "NotchPrompter",
+  "version": "1.1.0",
+  "description": "A local teleprompter at the top of the web page you choose. Paste a script, set your pace, and keep your eyes up.",
+  "minimum_chrome_version": "114",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "background": {"service_worker": "background.js"},
+  "action": {"default_title": "NotchPrompter", "default_popup": "editor.html", "default_icon": "icon.png"},
+  "icons": {"128": "icon.png"},
+  "commands": {
+    "toggle": {"suggested_key": "Alt+Shift+Y", "description": "Show or collapse the teleprompter"},
+    "play": {"suggested_key": "Alt+Shift+P", "description": "Play or pause the teleprompter"},
+    "restart": {"suggested_key": "Alt+Shift+R", "description": "Restart the script"}
+  },
+  "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'none'"}
+}

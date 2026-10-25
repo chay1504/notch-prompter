@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NotchPrompter — Script</title><link rel="stylesheet" href="editor.css"></head>
+<body>
+  <main>
+    <header><div class="notch-mark" aria-hidden="true">Read. <em>Look up.</em></div><div class="title-row"><h1>NotchPrompter</h1><span class="edition">CHROME</span></div><p>Your next line, close to the camera.</p></header>
+    <div class="script-heading"><label for="script">Your script</label><output id="stats">0 words</output></div>
+    <textarea id="script" spellcheck="false" placeholder="Paste your script here…" aria-describedby="format-help"></textarea>
+    <p class="format-help" id="format-help"><code>*highlight*</code> a word · <code># Section</code> for a cue</p>
+    <div class="settings">
+      <label for="wpm">Reading pace <output id="wpm-value">140 wpm</output><input id="wpm" type="range" min="40" max="400" step="5"></label>
+      <label for="font">Text size <output id="font-value">28 px</output><input id="font" type="range" min="16" max="72" step="1"></label>
+    </div>
+    <div class="checks"><label><input id="countdown" type="checkbox"> 3-second countdown</label><label><input id="center" type="checkbox"> Center text</label></div>
+    <div class="actions"><button id="show" class="primary">Show on this tab</button><button id="play">Play / pause</button></div>
+    <div class="utility"><button id="restart">Back to top</button><button id="hide">Hide</button><button id="import">Import .txt</button><button id="full">Full editor ↗</button></div>
+    <input id="file" type="file" accept=".txt,text/plain" hidden>
+    <p id="status" role="status" aria-live="polite">Saved on this computer.</p>
+    <footer>Works inside the web page you choose. Visible in tab recordings and screen shares.<br><a href="https://notch-prompter-zeta.vercel.app/#extension" target="_blank" rel="noreferrer">Setup and shortcuts</a></footer>
+  </main>
+  <script src="core.js"></script><script src="editor.js"></script>
+</body>
+</html>

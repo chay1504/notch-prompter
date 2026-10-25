@@ -4,6 +4,8 @@ Native AppKit menu bar app for macOS 13+, Apple Silicon and Intel. No Electron r
 
 ## Install
 
+If macOS blocks this downloaded beta, read [the installation diagnosis and local-build option](INSTALL.md). The `.app` format alone does not establish trust. The publisher has chosen not to join Apple's Developer Program, so this is not a notarized download. The [Chrome extension](../chrome-extension/README.md) is another option for browser use.
+
 Download the universal ZIP from [Releases](https://github.com/chay1504/notch-prompter/releases), unzip, drag **NotchPrompter.app** into Applications, then open it. The menu bar speech-bubble icon contains the editor, preferences and Quit. This beta is ad-hoc signed, not notarized: follow [Apple's unidentified-developer guidance](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac) if macOS blocks opening. Do not disable Gatekeeper system-wide. Start at login is optional and may need approval in System Settings → General → Login Items.
 
 ## Read and edit

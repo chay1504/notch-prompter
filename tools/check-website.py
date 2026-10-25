@@ -1,5 +1,6 @@
 """Check local website resources and the advertised Windows download digest."""
 import hashlib
+import json
 import re
 from html.parser import HTMLParser
 from pathlib import Path
@@ -23,4 +24,10 @@ digest = hashlib.sha256((root / "downloads/NotchPrompter.exe").read_bytes()).hex
 assert digest in html, "Windows checksum in website does not match its download"
 assert "data-mac-download" in html, "Missing explicit Mac download"
 assert "not guaranteed" in html.lower(), "Mac recording limitation must be visible"
+extension = root / 'downloads/NotchPrompter-Chrome.zip'
+metadata = json.loads((root / 'downloads/chrome-extension.json').read_text())
+assert metadata['sha256'] == hashlib.sha256(extension.read_bytes()).hexdigest()
+assert metadata['bytes'] == extension.stat().st_size
+assert 'data-extension-download' in html and 'chrome://extensions' in html
+assert 'not Apple-notarized' in html
 print("Website resources, Windows checksum, Mac download and recording disclosure checked")

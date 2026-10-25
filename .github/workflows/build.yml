@@ -1,4 +1,4 @@
-name: Build desktop apps
+name: Build apps and Chrome extension
 on:
   push:
     branches: [main]
@@ -53,6 +53,40 @@ jobs:
             macos/dist/NotchPrompter-macOS-universal.zip
             macos/dist/SHA256-macOS.txt
             macos/dist/*-smoke.png
+            macos/dist/signature-verification.txt
+  extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: chrome-extension/tests/package-lock.json
+      - name: Install browser test tools
+        working-directory: chrome-extension/tests
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install isolated Chromium
+        working-directory: chrome-extension/tests
+        run: npx playwright install --with-deps chromium
+      - name: Check runtime JavaScript
+        run: |
+          for file in chrome-extension/*.js; do node --check "$file"; done
+      - name: Test extension runtime
+        working-directory: chrome-extension/tests
+        run: npm test
+      - name: Verify downloadable package matches source
+        run: |
+          python3 tools/package-extension.py
+          git diff --exit-code -- website/downloads/NotchPrompter-Chrome.zip website/downloads/chrome-extension.json website/downloads/SHA256-Chrome.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: extension
+          path: |
+            website/downloads/NotchPrompter-Chrome.zip
+            website/downloads/SHA256-Chrome.txt
+            chrome-extension/tests/test-results/
   website:
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +98,7 @@ jobs:
       - run: python3 tools/check-website.py
   release:
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [windows, macos, website]
+    needs: [windows, macos, website, extension]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -78,5 +112,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cat release-files/SHA256-Windows.txt release-files/SHA256-macOS.txt > release-files/SHA256SUMS.txt
-          gh release create "$GITHUB_REF_NAME" release-files/NotchPrompter.exe release-files/NotchPrompter-Windows.zip release-files/NotchPrompter-macOS-universal.zip release-files/SHA256SUMS.txt --verify-tag --prerelease --title "NotchPrompter $GITHUB_REF_NAME" --notes-file RELEASE-NOTES.md
+          cat release-files/SHA256-Windows.txt release-files/SHA256-macOS.txt release-files/SHA256-Chrome.txt > release-files/SHA256SUMS.txt
+          gh release create "$GITHUB_REF_NAME" release-files/NotchPrompter.exe release-files/NotchPrompter-Windows.zip release-files/NotchPrompter-macOS-universal.zip release-files/NotchPrompter-Chrome.zip release-files/SHA256SUMS.txt --verify-tag --prerelease --title "NotchPrompter $GITHUB_REF_NAME" --notes-file RELEASE-NOTES.md

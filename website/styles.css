@@ -206,6 +206,29 @@ kbd { display: inline-block; min-width: 1.9em; padding: 0.12em 0.5em; border-rad
 .checksum code { background: none; padding: 0; }
 
 .footer { border-top: 1px solid var(--line); padding: 26px 0; font-size: 14px; color: var(--muted); }
+.extension-section { background:var(--bg-2); }
+.extension-intro { display:grid; grid-template-columns:1.4fr 1fr; gap:56px; align-items:center; }
+.extension-intro .lede { margin:20px 0 0; font-size:19px; }
+.extension-card { border:1px solid var(--line); border-radius:24px; padding:0 28px 28px; background:var(--card); text-align:center; }
+.extension-card h3 { margin:22px 0 8px; font-size:22px; }
+.extension-card p { color:var(--muted); font-size:14px; margin:0 0 20px; }
+.extension-notch { display:block; width:184px; margin:auto; padding:10px; border-radius:0 0 16px 16px; background:#000; color:#FFF; font-size:13px; font-weight:600; }
+.extension-notch em { color:#FFD60A; font-style:normal; }
+.text-link { display:block; font-size:12px; color:var(--muted); margin-top:12px; text-decoration:underline; }
+.extension-steps { display:grid; grid-template-columns:repeat(4,1fr); list-style:decimal; gap:30px; margin:48px 0 30px; padding-left:22px; }
+.extension-steps li { padding-left:4px; }
+.extension-steps li::marker { color:var(--muted); font-size:13px; }
+.extension-steps p { margin:9px 0; color:var(--muted); font-size:14px; line-height:1.6; }
+.copy-address { font:inherit; font-size:12px; border:1px solid var(--line); background:var(--card); color:var(--ink); padding:7px 10px; border-radius:7px; cursor:pointer; }
+.copy-address:focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+.extension-notes { border-top:1px solid var(--line); padding-top:20px; color:var(--muted); font-size:14px; }
+.extension-notes p + p,.mac-guidance { margin-top:16px; }
+#mac-install h2 { margin-bottom:22px; }
+.mac-download { margin-top:24px; border:1px solid var(--line); border-radius:14px; padding:16px 20px; }
+.mac-download summary { cursor:pointer; font-weight:600; }
+.mac-download p { margin:16px 0; color:var(--muted); }
+@media(max-width:850px){.extension-intro{grid-template-columns:1fr;gap:30px}.extension-steps{grid-template-columns:1fr 1fr;gap:24px}.extension-card{max-width:500px;width:100%;justify-self:center}}
+@media(max-width:500px){.extension-steps{grid-template-columns:1fr}.extension-intro .lede{font-size:17px}.extension-card{padding-left:18px;padding-right:18px}}
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
 
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 140%); max-width: calc(100% - 32px); background: #111113; color: #F2F2F7;

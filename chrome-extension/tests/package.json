@@ -1,0 +1,7 @@
+{
+  "name": "notchprompter-extension-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {"test": "node --test core.test.cjs && playwright test"},
+  "devDependencies": {"@playwright/test": "1.56.1"}
+}

@@ -22,5 +22,13 @@ codesign --force --deep --sign - "$APP"
 codesign --verify --deep --strict "$APP"
 lipo "$APP/Contents/MacOS/NotchPrompter" -verify_arch arm64 x86_64
 ditto -c -k --sequesterRsrc --keepParent "$APP" dist/NotchPrompter-macOS-universal.zip
-shasum -a 256 dist/NotchPrompter-macOS-universal.zip > dist/SHA256-macOS.txt
+(cd dist && shasum -a 256 NotchPrompter-macOS-universal.zip > SHA256-macOS.txt)
+# Verify the actual distributed archive after extraction, not only the pre-ZIP app.
+VERIFY_DIR=$(mktemp -d "${TMPDIR:-/tmp}/notchprompter-verify.XXXXXX")
+trap 'rm -rf "$VERIFY_DIR"' EXIT
+ditto -x -k dist/NotchPrompter-macOS-universal.zip "$VERIFY_DIR"
+codesign --verify --deep --strict "$VERIFY_DIR/NotchPrompter.app"
+lipo "$VERIFY_DIR/NotchPrompter.app/Contents/MacOS/NotchPrompter" -verify_arch arm64 x86_64
+codesign -d --verbose=2 "$VERIFY_DIR/NotchPrompter.app" 2>dist/signature-verification.txt
+printf '%s\n' 'Distribution: ad-hoc developer build; no Apple Developer ID; no notarization ticket.' >> dist/signature-verification.txt
 echo "Built universal macOS app (Apple Silicon + Intel), ad-hoc signed; not notarized."

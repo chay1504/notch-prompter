@@ -12,6 +12,15 @@
       ]
     },
     {
+      "source": "/downloads/NotchPrompter-Chrome.zip",
+      "headers": [
+        { "key": "Content-Type", "value": "application/zip" },
+        { "key": "Content-Disposition", "value": "attachment; filename=\"NotchPrompter-Chrome.zip\"" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
       "source": "/media/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
     }

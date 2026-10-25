@@ -294,6 +294,22 @@
       showToast("Downloading the Mac beta. Unzip and drag NotchPrompter.app to Applications. macOS may block this unnotarized beta. Screen recording invisibility is not guaranteed.");
     });
   });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-extension-download]"), function (a) {
+    a.addEventListener("click", function () {
+      showToast("Extract the ZIP, open chrome://extensions, turn on Developer mode, and choose Load unpacked. Select the folder containing manifest.json.");
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (button) {
+    button.addEventListener("click", function () {
+      if (!navigator.clipboard) { showToast("Enter chrome://extensions in Chrome's address bar."); return; }
+      navigator.clipboard.writeText(button.getAttribute("data-copy")).then(function () {
+        showToast("Copied chrome://extensions. Paste it in Chrome's address bar.");
+      }).catch(function () { showToast("Enter chrome://extensions in Chrome's address bar."); });
+    });
+  });
+  fetch("downloads/chrome-extension.json").then(function (r) { if (!r.ok) throw new Error("Metadata unavailable"); return r.json(); })
+    .then(function (metadata) { var size = document.getElementById("extension-size"); if (size && Number.isFinite(metadata.bytes)) size.textContent = Math.ceil(metadata.bytes / 1024) + " KB ZIP"; })
+    .catch(function () {});
 
   var video = document.getElementById("howto"), userTouchedVideo = false;
   if (video) {

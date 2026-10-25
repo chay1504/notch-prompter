@@ -6,6 +6,8 @@ dist/
 .DS_Store
 .vercel/
 node_modules/
+test-results/
+playwright-report/
 *.log
 .env
 .env.*
