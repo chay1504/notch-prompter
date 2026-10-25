@@ -2,6 +2,7 @@
 * { box-sizing:border-box; }
 body { margin:0; width:420px; background:var(--paper); color:var(--ink); font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
 main { padding:0 22px 18px; }
+fieldset { border:0; padding:0; margin:0; min-inline-size:0; }
 header { padding-bottom:15px; }
 .notch-mark { width:184px; height:34px; margin:0 auto 18px; border-radius:0 0 15px 15px; background:#000; color:white; text-align:center; padding:7px; font-size:12px; font-weight:600; }
 .notch-mark em { color:#FFD60A; font-style:normal; }

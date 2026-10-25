@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "NotchPrompter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A local teleprompter at the top of the web page you choose. Paste a script, set your pace, and keep your eyes up.",
   "minimum_chrome_version": "114",
   "permissions": ["activeTab", "scripting", "storage"],

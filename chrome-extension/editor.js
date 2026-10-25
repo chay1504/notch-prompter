@@ -78,9 +78,15 @@
     $("file").value = "";
   });
   labels();
-  const unassigned = (await chrome.commands.getAll()).filter(command => command.name !== "_execute_action" && !command.shortcut);
+  status("Saved on this computer.");
+  $("editor-controls").disabled = false;
+  const unassigned = (await chrome.commands.getAll().catch(() => [])).filter(command => command.name !== "_execute_action" && !command.shortcut);
   if (unassigned.length) {
     $("shortcuts-notice").hidden = false;
     $("shortcuts-notice").textContent = "Some shortcuts are unavailable. Assign them at chrome://extensions/shortcuts. The on-screen controls still work.";
   }
-})();
+})().catch(error => {
+  const message = document.getElementById("status");
+  message.textContent = "Could not load the editor. Reopen the extension and try again. " + error.message;
+  message.classList.add("error");
+});

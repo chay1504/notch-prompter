@@ -54,6 +54,6 @@ Mac build: on a Mac with Swift 5.9+/Xcode Command Line Tools, run `cd macos`, `s
 
 Website preview: `python -m http.server 8643 --bind 127.0.0.1 --directory website`, then visit `http://127.0.0.1:8643`. For Vercel, select **website** as the project root; there is no build command. The Mac link points to the versioned GitHub release. The existing demo shows the Windows version and its capture exclusion, not verified Mac behavior.
 
-Pushes and pull requests run build checks. A `v*` tag publishes a prerelease only after desktop builds, Mac core tests, native AppKit smoke test, Chrome extension browser tests and website checks succeed. The Chrome release is `v1.1.0-beta.1`; the earlier desktop-only release remains available.
+Pushes and pull requests run build checks. A `v*` tag publishes a prerelease only after desktop builds, Mac core tests, native AppKit smoke test, Chrome extension browser tests and website checks succeed. The Chrome release is `v1.1.1-beta.1`; the earlier desktop-only release remains available.
 
 CI verifies compilation and automated behaviors, not the experience on a physical Mac. Camera detection, physical-notch layout, Intel runtime behavior, screen sharing, login startup, full-screen Spaces and Gatekeeper need real-device acceptance testing before a stable Mac release.

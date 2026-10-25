@@ -1,5 +1,7 @@
 Chrome extension release, Windows teleprompter and native Mac beta installation improvements.
 
+Chrome 1.1.1 fixes an editor startup race: editing is enabled only after saved preferences have loaded, so a fast paste cannot be replaced by initial data.
+
 - **Chrome (new):** download `NotchPrompter-Chrome.zip`, extract it, open `chrome://extensions`, enable Developer mode, then **Load unpacked** the folder containing `manifest.json`. Pin the extension, open a normal website, paste a script and choose **Show on this tab**. [Setup guide](https://notch-prompter-zeta.vercel.app/#extension).
 - Chrome scripts save locally; permissions are limited to temporary active-tab access, scripting and storage. No all-sites permission, uploads, camera access or remote code. The overlay is part of the chosen web page and is visible in tab/screen recordings.
 - **Mac installation diagnosis:** the native beta is ad-hoc signed and remains unnotarized. Apple may block its first launch. The release ZIP is now extracted and its signature and both CPU architectures are checked again in CI. A malformed checksum path was also corrected. These packaging checks do not make the app Apple-approved.
