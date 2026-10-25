@@ -28,7 +28,7 @@ final class IslandView: NSView {
     private var textHeight: CGFloat = 0
     private let storage = NSTextStorage()
     private let layout = NSLayoutManager()
-    private let container = NSTextContainer(size: NSSize(width: 560, height: .greatestFiniteMagnitude))
+    private let container = NSTextContainer(size: NSSize(width: 560, height: CGFloat.greatestFiniteMagnitude))
     override var isFlipped: Bool { true }
     private var viewport: NSRect { NSRect(x: 28, y: 12, width: max(1, bounds.width - 56), height: max(1, bounds.height - 64)) }
     // Let the last line reach the top reading position before stopping.
@@ -115,7 +115,7 @@ final class IslandView: NSView {
             }
         }
         storage.setAttributedString(result)
-        container.containerSize = NSSize(width: max(1, viewport.width), height: .greatestFiniteMagnitude)
+        container.containerSize = NSSize(width: max(1, viewport.width), height: CGFloat.greatestFiniteMagnitude)
         layout.ensureLayout(for: container)
         textHeight = layout.usedRect(for: container).height
         words = Script.wordCount(script)

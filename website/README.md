@@ -1,6 +1,8 @@
 # NotchPrompter website
 
-A static landing page (no build step) for NotchPrompter.
+A static landing page (no build step) for NotchPrompter on Windows and Mac.
+
+The Mac button downloads the universal app ZIP from the versioned GitHub prerelease. When publishing a new Mac release, update both `data-mac-download` links and the release-notes link in `index.html`. Mac capture exclusion is not guaranteed; keep the recording disclosure visible. The current explainer video demonstrates Windows behavior.
 
 ```
 index.html      the page
@@ -15,14 +17,14 @@ vercel.json     forces the .exe to download (Content-Disposition: attachment) an
 ## Preview locally
 
 ```bash
-python -m http.server 8642 --directory notch-prompter-site
+python -m http.server 8643 --bind 127.0.0.1 --directory website
 ```
 
-Then open http://127.0.0.1:8642.
+From the repository root, then open http://127.0.0.1:8643.
 
 ## Updating the app
 
-1. Rebuild in `../notch-prompter` (`.\build.ps1`).
+1. Rebuild in the repository root (`.\build.ps1`).
 2. Copy `dist\NotchPrompter.exe` into `downloads/`.
 3. Update the size, version and SHA-256 shown near the bottom of `index.html`:
    `Get-FileHash downloads\NotchPrompter.exe -Algorithm SHA256`.
