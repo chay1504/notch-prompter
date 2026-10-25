@@ -15,12 +15,15 @@ assert not manifest.get('host_permissions') and not manifest.get('content_script
 assert "script-src 'self'" in manifest['content_security_policy']['extension_pages']
 files = ['manifest.json', 'core.js', 'background.js', 'content.js', 'editor.html', 'editor.css', 'editor.js', 'icon.png', 'README.md']
 archive = output / 'NotchPrompter-Chrome.zip'
-with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as package:
+with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_STORED) as package:
     for name in sorted(files):
         entry = zipfile.ZipInfo('NotchPrompter-Chrome/' + name, date_time=(2026, 10, 25, 0, 0, 0))
-        entry.compress_type = zipfile.ZIP_DEFLATED
+        entry.compress_type = zipfile.ZIP_STORED
         entry.external_attr = 0o100644 << 16
-        package.writestr(entry, (source / name).read_bytes())
+        data = (source / name).read_bytes()
+        if name != 'icon.png':
+            data = data.replace(b'\r\n', b'\n')
+        package.writestr(entry, data)
 digest = hashlib.sha256(archive.read_bytes()).hexdigest()
 metadata = {'version': manifest['version'], 'sha256': digest, 'bytes': archive.stat().st_size}
 (output / 'chrome-extension.json').write_text(json.dumps(metadata, indent=2) + '\n')

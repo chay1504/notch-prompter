@@ -40,21 +40,30 @@
     .counter[hidden]{display:none}
     @media (prefers-reduced-motion:reduce){.script{will-change:auto}}
   `;
-  shadow.append(style);
+  const sheet = new CSSStyleSheet(); sheet.replaceSync(style.textContent);
+  shadow.adoptedStyleSheets = [sheet];
   const island = document.createElement("section");
   island.className = "island"; island.dataset.mode = "collapsed";
   island.setAttribute("aria-label", "Teleprompter");
-  // Static controls only. Script text is always inserted with textContent below.
-  island.innerHTML = `<button class="peek" aria-label="Open teleprompter">Teleprompter · click to open</button>
-    <div class="viewport" role="button" tabindex="0" aria-label="Play or pause script" aria-pressed="false"><div class="script"></div></div>
-    <div class="toolbar" aria-label="Teleprompter controls">
-      <button data-action="restart" aria-label="Back to top">↺</button>
-      <button data-action="slower" aria-label="Slower">−</button><span class="speed"></span><button data-action="faster" aria-label="Faster">+</button>
-      <button data-action="play" class="play" aria-label="Play or pause">▶</button>
-      <button data-action="edit" aria-label="Edit script">Edit</button><button data-action="collapse" aria-label="Collapse teleprompter">⌃</button>
-      <button data-action="hide" aria-label="Hide teleprompter">×</button>
-    </div><div class="progress"></div><button class="grip" aria-label="Resize teleprompter. Use arrow keys; Shift plus arrows changes width."></button>
-    <div class="counter" aria-live="polite" hidden></div>`;
+  // DOM methods avoid HTML parsing and support pages enforcing Trusted Types.
+  function element(tag, attributes = {}, text = "") {
+    const node = document.createElement(tag);
+    for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
+    node.textContent = text; return node;
+  }
+  const peek = element("button", {class:"peek", "aria-label":"Open teleprompter"}, "Teleprompter · click to open");
+  const prompt = element("div", {class:"viewport", role:"button", tabindex:"0", "aria-label":"Play or pause script", "aria-pressed":"false"});
+  prompt.append(element("div", {class:"script"}));
+  const toolbar = element("div", {class:"toolbar", "aria-label":"Teleprompter controls"});
+  for (const [action, label, glyph] of [["restart","Back to top","↺"],["slower","Slower","−"],
+    ["faster","Faster","+"],["play","Play or pause","▶"],["edit","Edit script","Edit"],
+    ["collapse","Collapse teleprompter","⌃"],["hide","Hide teleprompter","×"]]) {
+    if (action === "faster") toolbar.append(element("span", {class:"speed"}));
+    toolbar.append(element("button", {"data-action":action,"aria-label":label,...(action === "play" ? {class:"play"} : {})}, glyph));
+  }
+  island.append(peek, prompt, toolbar, element("div", {class:"progress"}),
+    element("button", {class:"grip", "aria-label":"Resize teleprompter. Use arrow keys; Shift plus arrows changes width."}),
+    element("div", {class:"counter", "aria-live":"polite", hidden:""}));
   shadow.append(island); document.documentElement.append(host);
   const viewport = shadow.querySelector(".viewport");
   const text = shadow.querySelector(".script");
