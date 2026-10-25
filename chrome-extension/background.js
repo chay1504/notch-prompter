@@ -10,16 +10,24 @@ function pageError(error) {
 }
 
 async function control(tabId, action) {
-  const allowed = ["show", "toggle", "play", "restart", "hide", "state"];
+  const allowed = ["show", "toggle", "play", "pause", "restart", "hide", "state"];
   if (!Number.isInteger(tabId) || !allowed.includes(action)) throw new Error("Invalid teleprompter command");
   try {
     try { await chrome.tabs.sendMessage(tabId, {type: "notch-ping"}); }
     catch {
       await chrome.scripting.executeScript({target: {tabId}, files: ["core.js", "content.js"]});
     }
+    if (["show", "toggle", "play"].includes(action)) await chrome.tabs.update(tabId, {active:true});
     return await chrome.tabs.sendMessage(tabId, {type: "notch-control", action});
   } catch (error) { throw new Error(pageError(error)); }
 }
+
+// Browser activation events also cover environments where page visibility is delayed.
+chrome.tabs.onActivated.addListener(async ({tabId, windowId}) => {
+  const tabs = await chrome.tabs.query({windowId});
+  await Promise.allSettled(tabs.filter(tab => tab.id !== tabId).map(tab =>
+    chrome.tabs.sendMessage(tab.id, {type:"notch-control", action:"pause"})));
+});
 
 chrome.runtime.onMessage.addListener((message, sender, respond) => {
   if (sender.id !== chrome.runtime.id) return false;

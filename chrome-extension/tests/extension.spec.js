@@ -21,6 +21,8 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
   try {
     const worker = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
     const extensionId = new URL(worker.url()).host;
+    const commands = await worker.evaluate(()=>chrome.commands.getAll());
+    expect(commands.filter(command=>['toggle','play','restart'].includes(command.name)).every(command=>command.shortcut)).toBe(true);
     const page = await context.newPage();
     const errors = []; page.on('pageerror',error=>errors.push(error.message));
     await page.goto('http://127.0.0.1:8794');
@@ -56,7 +58,8 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
     await editor.screenshot({path:testInfo.outputPath('extension-editor.png')});
     await worker.evaluate(async id=> {await chrome.storage.local.set({countdown:false}); await control(id,'play');},tabId);
     await expect(host.locator('.island')).toHaveAttribute('data-playing','true');
-    await editor.bringToFront();
+    const editorId = await worker.evaluate(async url=> (await chrome.tabs.query({})).find(tab=>tab.url===url).id, editor.url());
+    await worker.evaluate(id=>chrome.tabs.update(id,{active:true}),editorId);
     await expect(host.locator('.island')).toHaveAttribute('data-playing','false');
     await page.bringToFront();
     await worker.evaluate(id=>control(id,'show'),tabId);

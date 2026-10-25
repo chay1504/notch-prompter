@@ -154,6 +154,7 @@
       case "show": open(); break;
       case "toggle": state().expanded && !host.hidden ? collapse() : open(); break;
       case "play": play(); break;
+      case "pause": pause(); break;
       case "restart": restart(); break;
       case "hide": pause(); host.hidden = true; break;
       }
