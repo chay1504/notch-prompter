@@ -58,7 +58,7 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
     await editor.screenshot({path:testInfo.outputPath('extension-editor.png')});
     await worker.evaluate(async id=> {await chrome.storage.local.set({countdown:false}); await control(id,'play');},tabId);
     await expect(host.locator('.island')).toHaveAttribute('data-playing','true');
-    const editorId = await worker.evaluate(async url=> (await chrome.tabs.query({})).find(tab=>tab.url===url).id, editor.url());
+    const editorId = await editor.evaluate(async()=> (await chrome.tabs.getCurrent()).id);
     await worker.evaluate(id=>chrome.tabs.update(id,{active:true}),editorId);
     await expect(host.locator('.island')).toHaveAttribute('data-playing','false');
     await page.bringToFront();
@@ -79,10 +79,7 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
     await worker.evaluate(id=>control(id,'show'),strictId);
     await expect(strict.locator('notch-prompter-overlay .island')).toHaveCSS('background-color','rgb(0, 0, 0)');
     await expect(strict.locator('notch-prompter-overlay .script')).toContainText('Hello world.');
-    const blocked = await context.newPage();
-    await blocked.goto('chrome://version');
-    await blocked.bringToFront();
-    const blockedId = await worker.evaluate(async()=> (await chrome.tabs.query({})).find(tab=>tab.active).id);
+    const blockedId = await worker.evaluate(async()=> (await chrome.tabs.create({url:'chrome://version',active:true})).id);
     const failure = await worker.evaluate(async id=> {try{await control(id,'show');return '';}catch(error){return error.message;}},blockedId);
     expect(failure).toContain('normal website');
     expect(errors).toEqual([]);
