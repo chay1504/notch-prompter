@@ -31,7 +31,7 @@ test('Packaged extension: editing, injection, safe formatting, countdown, playba
     await editor.getByLabel('Your script',{exact:true}).fill(script);
     await expect.poll(()=>worker.evaluate(async()=> (await chrome.storage.local.get('script')).script)).toBe(script);
     await editor.getByRole('button',{name:'Show on this tab',exact:true}).click();
-    await expect(editor.getByRole('status')).toHaveText('Ready on your selected tab.');
+    await expect(editor.locator('#status')).toHaveText('Ready on your selected tab.');
     await page.bringToFront();
     const host = page.locator('notch-prompter-overlay');
     await expect(host).toHaveCount(1);
