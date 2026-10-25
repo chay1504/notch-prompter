@@ -178,6 +178,9 @@ final class AppController: NSObject, NSApplicationDelegate, NSTextViewDelegate, 
         text.textColor = .white; text.backgroundColor = NSColor(white: 0.1, alpha: 1)
         text.textContainerInset = NSSize(width: 20, height: 20)
         text.isVerticallyResizable = true; text.isHorizontallyResizable = false
+        text.minSize = NSSize(width: 0, height: 0)
+        text.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        text.textContainer?.containerSize = NSSize(width: 740, height: CGFloat.greatestFiniteMagnitude)
         text.autoresizingMask = [.width]; text.textContainer?.widthTracksTextView = true
         text.string = island.script; text.delegate = self
         text.setAccessibilityLabel("Teleprompter script")
@@ -186,6 +189,7 @@ final class AppController: NSObject, NSApplicationDelegate, NSTextViewDelegate, 
         info.font = .systemFont(ofSize: 12); info.textColor = .secondaryLabelColor; root.addSubview(info)
         let open = NSButton(title: "Open .txt…", target: self, action: #selector(importScript))
         let start = NSButton(title: "Start from top", target: self, action: #selector(startFromEditor))
+        open.bezelStyle = .rounded; start.bezelStyle = .rounded
         open.translatesAutoresizingMaskIntoConstraints = false; start.translatesAutoresizingMaskIntoConstraints = false
         root.addSubview(open); root.addSubview(start)
         NSLayoutConstraint.activate([
@@ -193,11 +197,14 @@ final class AppController: NSObject, NSApplicationDelegate, NSTextViewDelegate, 
             scroll.trailingAnchor.constraint(equalTo: root.trailingAnchor), scroll.bottomAnchor.constraint(equalTo: root.bottomAnchor, constant: -68),
             info.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 18),
             info.topAnchor.constraint(equalTo: scroll.bottomAnchor, constant: 8),
+            info.trailingAnchor.constraint(lessThanOrEqualTo: root.trailingAnchor, constant: -18),
             open.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 18), open.bottomAnchor.constraint(equalTo: root.bottomAnchor, constant: -8),
             start.trailingAnchor.constraint(equalTo: root.trailingAnchor, constant: -18), start.bottomAnchor.constraint(equalTo: open.bottomAnchor)
         ])
         editor = window; textView = text; stats = info; updateStats()
         window.center(); window.makeKeyAndOrderFront(nil); window.makeFirstResponder(text)
+        root.layoutSubtreeIfNeeded(); scroll.tile()
+        text.setFrameSize(NSSize(width: scroll.contentSize.width, height: max(scroll.contentSize.height, text.frame.height)))
         NSApp.activate(ignoringOtherApps: true)
     }
     func textDidChange(_ notification: Notification) {
@@ -253,6 +260,7 @@ final class AppController: NSObject, NSApplicationDelegate, NSTextViewDelegate, 
             saveNow(); assert(lastSaveError == nil)
             assert(store.loadScript() == island.script)
             assert(store.loadPreferences().wpm == 150)
+            assert(textView!.textContainer!.containerSize.width <= editor!.contentView!.bounds.width)
             saveSmokeImage(island, name: "island-smoke.png")
             saveSmokeImage(editor!.contentView!, name: "editor-smoke.png")
             print("AppKit smoke test passed: panel, editor, playback, controls and local saving")
@@ -264,7 +272,10 @@ final class AppController: NSObject, NSApplicationDelegate, NSTextViewDelegate, 
         do {
             try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
             guard let image = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { fatalError("No view bitmap") }
-            view.cacheDisplay(in: view.bounds, to: image)
+            view.layoutSubtreeIfNeeded(); view.displayIfNeeded()
+            view.effectiveAppearance.performAsCurrentDrawingAppearance {
+                view.cacheDisplay(in: view.bounds, to: image)
+            }
             guard let data = image.representation(using: .png, properties: [:]) else { fatalError("No PNG data") }
             try data.write(to: output.appendingPathComponent(name))
         } catch { fatalError("Smoke image failed: \(error)") }
